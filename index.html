@@ -59,9 +59,9 @@ main:focus{outline:none}
 .wrap.narrow{width:min(820px,calc(100% - 48px))}
 
 /* the one fixed environment behind everything: cool light, chalk in the air */
-.env{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;background:var(--canvas)}
-.env::before{content:"";position:absolute;inset:-30%;background:radial-gradient(38% 34% at 30% 20%,rgba(119,144,161,.13),transparent 70%),radial-gradient(44% 40% at 76% 78%,rgba(98,114,131,.12),transparent 70%);animation:envDrift 90s ease-in-out -20s infinite alternate}
-.env::after{content:"";position:absolute;inset:0;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E")}
+.env{position:fixed;top:0;right:0;bottom:0;left:0;z-index:-1;pointer-events:none;overflow:hidden;background:var(--canvas)}
+.env::before{content:"";position:absolute;top:-30%;right:-30%;bottom:-30%;left:-30%;background:radial-gradient(38% 34% at 30% 20%,rgba(119,144,161,.13),transparent 70%),radial-gradient(44% 40% at 76% 78%,rgba(98,114,131,.12),transparent 70%);animation:envDrift 90s ease-in-out -20s infinite alternate}
+.env::after{content:"";position:absolute;top:0;right:0;bottom:0;left:0;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E")}
 @keyframes envDrift{from{transform:translate3d(-4%,-3%,0) rotate(0deg)}to{transform:translate3d(5%,4%,0) rotate(6deg)}}
 .mote{position:absolute;left:var(--x);top:var(--y);width:var(--s,3px);height:var(--s,3px);border-radius:50%;background:var(--text-primary);opacity:0;animation:mote var(--d,26s) linear var(--dl,-4s) infinite}
 @keyframes mote{0%{opacity:0;transform:translate3d(0,0,0)}14%{opacity:.26}80%{opacity:.16}100%{opacity:0;transform:translate3d(var(--mx,30px),150px,0)}}
@@ -77,7 +77,7 @@ h3{font-weight:700;font-size:clamp(1.1rem,1.5vw,1.3rem);line-height:1.2;letter-s
 
 /* buttons and links */
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 26px;border:0;border-radius:6px;background:var(--accent);color:var(--on-accent);font:600 1rem/1 var(--f-body);text-decoration:none;cursor:pointer;position:relative;transition:background-color .35s var(--ease-out),transform .35s var(--ease-out)}
-.btn::after{content:"";position:absolute;inset:-1px;border-radius:inherit;box-shadow:0 10px 34px rgba(214,40,52,.5);opacity:0;transition:opacity .45s var(--ease-out);pointer-events:none}
+.btn::after{content:"";position:absolute;top:-1px;right:-1px;bottom:-1px;left:-1px;border-radius:inherit;box-shadow:0 10px 34px rgba(214,40,52,.5);opacity:0;transition:opacity .45s var(--ease-out);pointer-events:none}
 .btn:hover{background:var(--accent-hover);transform:translateY(-2px)}
 .btn:hover::after{opacity:1}
 .btn:active{transform:translateY(0)}
@@ -87,7 +87,7 @@ h3{font-weight:700;font-size:clamp(1.1rem,1.5vw,1.3rem);line-height:1.2;letter-s
 
 /* nav */
 .nav{position:fixed;top:0;left:0;right:0;z-index:50;height:var(--nav-h);display:flex;align-items:center}
-.nav::before{content:"";position:absolute;inset:0;background:rgba(13,19,25,.86);border-bottom:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);opacity:0;transition:opacity .5s var(--ease-out)}
+.nav::before{content:"";position:absolute;top:0;right:0;bottom:0;left:0;background:rgba(13,19,25,.86);border-bottom:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);opacity:0;transition:opacity .5s var(--ease-out)}
 .nav.solid::before{opacity:1}
 .nav::after{content:"";position:absolute;left:0;right:0;top:0;height:140px;background:linear-gradient(rgba(4,7,10,.62),rgba(4,7,10,0));pointer-events:none;transition:opacity .5s var(--ease-out);z-index:-1}
 .nav.solid::after{opacity:0}
@@ -104,17 +104,19 @@ h3{font-weight:700;font-size:clamp(1.1rem,1.5vw,1.3rem);line-height:1.2;letter-s
 /* hero: tall pinned region, sticky stage */
 .hero{position:relative;height:600vh;background:var(--canvas)}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate}
-.poster,.poster-end,.stage video{position:absolute;left:0;top:0;width:100%;height:100%}
+.poster,.poster-end,.stage video,.stage canvas{position:absolute;left:0;top:0;width:100%;height:100%}
 .poster,.poster-end{background-size:cover;background-position:70% 40%}
 .poster-end{opacity:0}
 .stage video{object-fit:cover;object-position:70% 40%;opacity:0;transition:opacity .9s var(--ease-out);will-change:transform;transform:translateZ(0)}
 .stage.video-ready video{opacity:1}
 .stage.video-failed video{display:none}
-.scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(6,10,14,.6) 0%,rgba(6,10,14,.32) 34%,rgba(6,10,14,0) 58%),radial-gradient(ellipse 120% 90% at 60% 46%,rgba(6,10,14,0) 36%,rgba(6,10,14,.56) 100%)}
+.stage canvas{object-fit:cover;object-position:70% 40%;opacity:0;transition:opacity .6s var(--ease-out)}
+.stage.seq-ready canvas{opacity:1}
+.scrim{position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;background:linear-gradient(90deg,rgba(6,10,14,.6) 0%,rgba(6,10,14,.32) 34%,rgba(6,10,14,0) 58%),radial-gradient(ellipse 120% 90% at 60% 46%,rgba(6,10,14,0) 36%,rgba(6,10,14,.56) 100%)}
 .stage::after{content:"";position:absolute;left:0;right:0;bottom:0;z-index:1;height:22vh;background:linear-gradient(rgba(13,19,25,0),var(--canvas));pointer-events:none;opacity:var(--foot,0)}
 .ring,.cue{z-index:2}
 .band{z-index:2;position:absolute;top:var(--nav-h);bottom:0;left:var(--col-x);width:var(--col-w);display:flex;flex-direction:column;justify-content:center;gap:18px;opacity:0;visibility:hidden;text-shadow:var(--tshadow);isolation:isolate}
-.band::before{content:"";position:absolute;inset:4% -34% 4% -40%;z-index:-1;pointer-events:none;opacity:calc(.25 + .75*var(--k,1));background:radial-gradient(ellipse 54% 54% at 50% 50%,rgba(4,7,10,var(--sa,.66)) 0%,rgba(4,7,10,calc(var(--sa,.66)*.8)) 50%,rgba(4,7,10,0) 84%)}
+.band::before{content:"";position:absolute;top:4%;right:-34%;bottom:4%;left:-40%;z-index:-1;pointer-events:none;opacity:calc(.25 + .75*var(--k,1));background:radial-gradient(ellipse 54% 54% at 50% 50%,rgba(4,7,10,var(--sa,.66)) 0%,rgba(4,7,10,calc(var(--sa,.66)*.8)) 50%,rgba(4,7,10,0) 84%)}
 .band.b1{--sa:.7}
 /* the chalk cloud blooms low and drifts left in beat three: the words sit a little higher and the scrim runs deeper */
 .band.b3{--sa:.82;padding-bottom:14vh}
@@ -137,15 +139,16 @@ h3{font-weight:700;font-size:clamp(1.1rem,1.5vw,1.3rem);line-height:1.2;letter-s
 .ring{position:absolute;right:26px;bottom:26px;width:34px;height:34px;color:var(--steel);transform:rotate(-90deg);transition:opacity .6s var(--ease-out)}
 .ring circle{transition:stroke-dashoffset .2s linear}
 .stage.video-ready .ring,.stage.video-failed .ring{opacity:0}
+.stage.seq-loading .ring{opacity:1}
 .cue{position:absolute;left:50%;bottom:26px;display:flex;flex-direction:column;align-items:center;gap:8px;margin-left:-60px;width:120px;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-primary);text-shadow:0 1px 3px rgba(4,7,10,.85);opacity:0}
 .cue svg{width:16px;height:22px;animation:cue 2.4s var(--ease-io) -1s infinite}
 @keyframes cue{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(7px);opacity:1}}
 @media (max-height:560px){.cue,.ring{display:none}.band{gap:10px}}
 /* tall or narrow screens: the weight gets the top of the screen, the words get the bottom */
 @media (max-aspect-ratio: 1/1), (max-width: 860px){
-  .poster,.poster-end,.stage video{height:66%}
+  .poster,.poster-end,.stage video,.stage canvas{height:66%}
   .poster,.poster-end{background-position:72% 50%}
-  .stage video{object-position:72% 50%}
+  .stage video,.stage canvas{object-position:72% 50%}
   .scrim{background:linear-gradient(rgba(6,10,14,.55) 0%,rgba(6,10,14,0) 15%,rgba(6,10,14,0) 44%,rgba(13,19,25,.9) 60%,var(--canvas) 66.5%)}
   .stage::after{display:none}
   .band,.band.b3{left:20px;right:20px;width:auto;top:calc(66% + 8px);bottom:auto;padding-bottom:0;justify-content:flex-start;gap:12px}
@@ -159,12 +162,12 @@ h3{font-weight:700;font-size:clamp(1.1rem,1.5vw,1.3rem);line-height:1.2;letter-s
 }
 /* short screens in that layout: the weight gives a little room back to the words */
 @media (max-aspect-ratio: 1/1) and (max-height: 700px), (max-width: 860px) and (max-height: 700px){
-  .poster,.poster-end,.stage video{height:58%}
+  .poster,.poster-end,.stage video,.stage canvas{height:58%}
   .scrim{background:linear-gradient(rgba(6,10,14,.55) 0%,rgba(6,10,14,0) 15%,rgba(6,10,14,0) 37%,rgba(13,19,25,.9) 52%,var(--canvas) 58.5%)}
   .band,.band.b3{top:calc(58% + 6px)}
 }
 @media (max-width: 860px) and (max-height: 480px){
-  .poster,.poster-end,.stage video{height:48%}
+  .poster,.poster-end,.stage video,.stage canvas{height:48%}
   .scrim{background:linear-gradient(rgba(6,10,14,.55) 0%,rgba(6,10,14,0) 18%,rgba(6,10,14,0) 30%,rgba(13,19,25,.9) 43%,var(--canvas) 48.5%)}
   .band,.band.b3{top:calc(48% + 4px);gap:8px}
   .band .kicker,.band .bsub{display:none}
@@ -268,9 +271,9 @@ h3{font-weight:700;font-size:clamp(1.1rem,1.5vw,1.3rem);line-height:1.2;letter-s
 .hold.done .read:nth-child(2),.hold.done .read:nth-child(2) .ok{transition-delay:.45s}
 .hold.done .read:nth-child(3),.hold.done .read:nth-child(3) .ok{transition-delay:.75s}
 .hold-btn{align-self:flex-start;position:relative;overflow:hidden;min-height:56px;padding:0 28px;border-radius:6px;border:1px solid var(--accent-bright);background:transparent;color:var(--text-primary);font:600 1rem/1 var(--f-body);cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:manipulation;transition:transform .35s var(--ease-out),border-color .5s var(--ease-out)}
-.hold-btn .fill{position:absolute;inset:0;background:var(--accent);transform:scaleX(var(--hp));transform-origin:left}
+.hold-btn .fill{position:absolute;top:0;right:0;bottom:0;left:0;background:var(--accent);transform:scaleX(var(--hp));transform-origin:left}
 .hold-btn .lbl{position:relative}
-.hold-btn::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 2px var(--accent-bright);opacity:0}
+.hold-btn::after{content:"";position:absolute;top:0;right:0;bottom:0;left:0;border-radius:inherit;box-shadow:inset 0 0 0 2px var(--accent-bright);opacity:0}
 .live .hold:not(.done):not(.holding) .hold-btn::after{animation:pulse 4.2s var(--ease-io) -1.2s infinite}
 @keyframes pulse{0%,100%{opacity:0}50%{opacity:.75}}
 .hold.holding .hold-btn{transform:scale(.97)}
@@ -342,7 +345,7 @@ fieldset.field{border:0;margin:0;padding:0;min-width:0}
 .err{font-size:.875rem;color:#f5b98e;min-height:0}
 .radios{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
 .radios label{position:relative;cursor:pointer}
-.radios input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.radios input{position:absolute;opacity:0;top:0;right:0;bottom:0;left:0;width:100%;height:100%;margin:0;cursor:pointer}
 .radios span{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border:1px solid var(--line-strong);border-radius:6px;font-weight:500;transition:background-color .35s var(--ease-out),border-color .35s var(--ease-out),color .35s var(--ease-out)}
 .radios input:checked+span{background:var(--text-primary);border-color:var(--text-primary);color:var(--canvas)}
 .radios input:focus-visible+span{outline:2px solid var(--accent-bright);outline-offset:3px}
@@ -434,6 +437,7 @@ fieldset.field{border:0;margin:0;padding:0;min-width:0}
     <div class="poster" aria-hidden="true"></div>
     <div class="poster-end" aria-hidden="true"></div>
     <video id="heroVideo" preload="none" muted playsinline disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video>
+    <canvas id="heroCanvas" width="1284" height="716" aria-hidden="true"></canvas>
     <div class="scrim" aria-hidden="true"></div>
 
     <div class="band b1 fx-plumb" data-a="0" data-b="0.19">
@@ -707,6 +711,9 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 const smoothstep = (p, e0, e1) => { const t = clamp((p - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); };
 const RM = matchMedia('(prefers-reduced-motion: reduce)');
+const COARSE = matchMedia('(pointer: coarse)');
+/* old Safari only knows addListener */
+const onMQ = (m, fn) => { if (m.addEventListener) m.addEventListener('change', fn); else m.addListener(fn); };
 
 /* ---------- text splitting, seeded so every load is identical ---------- */
 function rng(seed) { let s = seed >>> 0; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; }
@@ -771,7 +778,7 @@ function updateCaptions(p) {
   if (Math.abs(c - cueOp) > 0.01 || ((c === 0 || c === 1) && c !== cueOp)) { cueOp = c; cue.style.opacity = c.toFixed(2); }
   const ft = smoothstep(p, 0.9, 1);
   if (Math.abs(ft - footOp) > 0.01 || ((ft === 0 || ft === 1) && ft !== footOp)) { footOp = ft; stage.style.setProperty('--foot', ft.toFixed(2)); }
-  if (videoFailed) {
+  if (videoFailed && !seqReady) {
     const e = smoothstep(p, 0.36, 0.5);
     if (Math.abs(e - endOp) > 0.01 || ((e === 0 || e === 1) && e !== endOp)) { endOp = e; endLayer.style.opacity = e.toFixed(2); }
   }
@@ -801,6 +808,7 @@ function tick(now) {
   if (Math.abs(target - shown) < 0.0005) { shown = target; rafId = null; lastTick = 0; }
   else rafId = requestAnimationFrame(tick);
   requestSeek(shown * video.duration);
+  drawSeq(shown);
   updateCaptions(shown);
 }
 function onScroll() {
@@ -822,9 +830,11 @@ let fetchStarted = false;
 function startBlobFetch() {
   if (fetchStarted) return;
   fetchStarted = true;
-  /* a visitor who asked their phone to save data gets the still-image journey, not the download */
-  if (navigator.connection && navigator.connection.saveData) { failVideo(); return; }
-  loadHeroBlob().catch(failVideo);
+  /* a visitor who asked their phone to save data gets the still-image journey, nothing more to download */
+  if (navigator.connection && navigator.connection.saveData) { useStills(false); return; }
+  /* touch devices scrub the frame sequence: seeking a video is unreliable there, and in-app browsers refuse it */
+  if (COARSE.matches) { useStills(true); return; }
+  loadHeroBlob().catch(() => useStills(true));
 }
 async function loadHeroBlob() {
   const ctrl = new AbortController();
@@ -857,23 +867,77 @@ async function loadHeroBlob() {
     requestSeek(heroProgress() * video.duration);
     stage.classList.add('video-ready');
   };
-  video.addEventListener('error', failVideo, { once: true });
+  video.addEventListener('error', () => useStills(true), { once: true });
   ['loadeddata', 'canplay'].forEach(t => video.addEventListener(t, onReady));
   video.src = URL.createObjectURL(new Blob(chunks, { type: 'video/mp4' }));
   video.load();
   /* phones decode nothing until playback starts once: a muted play, paused at once, primes the decoder */
   const p = video.play();
   if (p && p.then) p.then(() => { video.pause(); onReady(); }).catch(() => {});
-  /* a phone that refuses to decode (low power mode) falls back to the still-image journey */
-  setTimeout(() => { if (!ready) failVideo(); }, 7000);
+  /* a browser that refuses to decode falls back to the frame sequence */
+  setTimeout(() => { if (!ready) useStills(true); }, 5000);
 }
-function failVideo() {
-  if (videoFailed) return;
-  videoFailed = true;
-  endLayer.style.backgroundImage = "url('assets/hero-ending.jpg')";
-  stage.classList.remove('video-ready');
-  stage.classList.add('video-failed');
-  endOp = -1; updateCaptions(shown);
+/* the still-image journey: the poster crossfades to the ending frame. With frames, the sequence takes over on top of it */
+function useStills(frames) {
+  if (!videoFailed) {
+    videoFailed = true;
+    endLayer.style.backgroundImage = "url('assets/hero-ending.jpg')";
+    stage.classList.remove('video-ready');
+    stage.classList.add('video-failed');
+    endOp = -1; updateCaptions(shown);
+  }
+  if (frames) startSequence();
+}
+
+/* ---------- the frame sequence: the same journey from still frames on a canvas ----------
+   Phones and tablets use it instead of the video, and it is the fallback wherever the video will not scrub.
+   In-app browsers (a link opened inside WhatsApp or Instagram) and low power mode refuse to seek a video,
+   but every browser can draw an image. */
+const canvas = $('#heroCanvas');
+const SEQ_N = 73;
+const seqUrl = i => 'assets/seq/f' + String(i).padStart(3, '0') + '.jpg';
+const seqImgs = new Array(SEQ_N);
+let seqOn = false, seqReady = false, seqLoaded = 0, seqShown = -1, seqCtx = null, seqRingAt = 0;
+function drawSeq(p) {
+  if (!seqOn || !seqLoaded) return;
+  const want = Math.round(clamp(p, 0, 1) * (SEQ_N - 1));
+  let best = -1;
+  for (let d = 0; d < SEQ_N && best < 0; d++) {
+    if (seqImgs[want - d]) best = want - d;
+    else if (seqImgs[want + d]) best = want + d;
+  }
+  if (best < 0 || best === seqShown) return;
+  seqShown = best;
+  seqCtx.drawImage(seqImgs[best], 0, 0, canvas.width, canvas.height);
+  canvas.dataset.f = best;
+  if (!seqReady) { seqReady = true; stage.classList.add('seq-ready'); }
+}
+function startSequence() {
+  if (seqOn) return;
+  seqOn = true;
+  seqCtx = canvas.getContext('2d');
+  stage.classList.add('seq-loading');
+  /* coarse to fine: every 8th frame first, so the whole journey scrubs almost at once, then the gaps fill in */
+  const order = [], seen = new Set();
+  for (const step of [8, 4, 2, 1]) for (let i = 0; i < SEQ_N; i += step) if (!seen.has(i)) { seen.add(i); order.push(i); }
+  let next = 0, active = 0, settled = 0;
+  const settle = () => {
+    settled++; active--;
+    const now = performance.now();
+    if (now - seqRingAt > 100 || settled === SEQ_N) { seqRingAt = now; ring.style.setProperty('--ld', Math.round(126 * (1 - settled / SEQ_N))); }
+    if (settled === SEQ_N) stage.classList.remove('seq-loading');
+    pump();
+  };
+  const pump = () => {
+    while (active < 6 && next < order.length) {
+      const i = order[next++], im = new Image();
+      active++;
+      im.onload = () => { seqImgs[i] = im; seqLoaded++; settle(); drawSeq(shown); };
+      im.onerror = settle;
+      im.src = seqUrl(i);
+    }
+  };
+  pump();
 }
 let heroInit = false;
 function initHeroOnce() {
@@ -889,7 +953,7 @@ function initHeroOnce() {
 }
 
 /* the static-hero gates, identical to the CSS, decided live.
-   Phones and tablets held upright get the scrub too: the clip is small and the fall is vertical,
+   Phones and tablets held upright get the scrub too, drawn from the frame sequence: the fall is vertical,
    so it survives the portrait crop. Only a phone held sideways and reduced motion get the still hero. */
 const GATES = [
   '(orientation: landscape) and (pointer: coarse) and (max-height: 560px)',
@@ -907,6 +971,7 @@ function enableScrub() {
   shown = target = heroProgress();
   updateCaptions(shown);
   requestSeek(shown * video.duration);
+  drawSeq(shown);
   onScroll();
 }
 function disableScrub() {
@@ -919,7 +984,7 @@ function applyHeroMode() {
   else enableScrub();
 }
 const MQLS = GATES.map(q => matchMedia(q));
-MQLS.forEach(m => m.addEventListener('change', applyHeroMode));
+MQLS.forEach(m => onMQ(m, applyHeroMode));
 new IntersectionObserver(es => {
   heroOnScreen = es[0].isIntersecting;
   if (heroOnScreen && scrubOn) onScroll();
@@ -1092,7 +1157,7 @@ function unpinFinalStates() {
   if (holdPinned) resetHold();
   if (plumbPinned) { plumbPinned = false; drivePlumb(); }
 }
-RM.addEventListener('change', e => {
+onMQ(RM, e => {
   if (e.matches) pinToFinalStates();
   else { unpinFinalStates(); applyHeroMode(); }
 });
