@@ -217,6 +217,46 @@ h3{font-weight:700;font-size:clamp(1.1rem,1.5vw,1.3rem);line-height:1.2;letter-s
 .reveal .rv:nth-child(6){transition-delay:.45s}
 .reveal.done .rv:nth-child(n){transition-delay:0s}
 
+/* treinadores: a character select. One trainer on stage, the others one tap away */
+.sel{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,80px);align-items:center;margin-top:clamp(36px,5vw,60px)}
+.sel-media{position:relative;border-radius:10px;overflow:hidden;background:var(--panel);border:1px solid var(--line-strong)}
+.sel-media::before{content:"";display:block;padding-top:125%}
+.sel-fig{position:absolute;top:0;right:0;bottom:0;left:0;margin:0;opacity:0;visibility:hidden;transition:opacity .6s var(--ease-out),visibility 0s linear .6s}
+.sel-fig.on{opacity:1;visibility:visible;transition:opacity .6s var(--ease-out),visibility 0s}
+.sel-fig img,.sel-fig video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 16%}
+.sel-fig video{opacity:0;transition:opacity .5s var(--ease-out)}
+.sel-fig.playing video{opacity:1}
+.sel-media::after{content:"";position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;background:linear-gradient(rgba(6,10,14,0) 62%,rgba(6,10,14,.72) 100%)}
+.cn{position:absolute;z-index:2;width:22px;height:22px;border:0 solid var(--text-primary);opacity:.8;pointer-events:none}
+.cn.tl{top:14px;left:14px;border-top-width:2px;border-left-width:2px}
+.cn.tr{top:14px;right:14px;border-top-width:2px;border-right-width:2px}
+.cn.bl{bottom:14px;left:14px;border-bottom-width:2px;border-left-width:2px}
+.cn.br{bottom:14px;right:14px;border-bottom-width:2px;border-right-width:2px}
+.sel-count{position:absolute;z-index:2;left:26px;bottom:22px;font-family:var(--f-mono);font-size:.8rem;letter-spacing:.14em;color:var(--text-primary);text-shadow:0 1px 3px rgba(4,7,10,.85)}
+.sel-count b{font-weight:500}
+.sel-side{display:flex;flex-direction:column}
+.sel-panel{display:none;flex-direction:column;gap:18px}
+.sel-panel.on{display:flex;animation:selIn .55s var(--ease-out)}
+@keyframes selIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.sel-name{font-size:clamp(2.8rem,6.4vw,5.4rem);font-weight:800;line-height:.98;letter-spacing:-.03em}
+.sel-quote{font-size:clamp(1.1rem,1.6vw,1.35rem);line-height:1.4;max-width:30ch}
+.bars{display:flex;flex-direction:column;gap:12px;margin:6px 0 8px}
+.bar{display:grid;grid-template-columns:96px minmax(0,1fr) 30px;align-items:center;gap:14px}
+.bar dt{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--steel)}
+.bar dd{position:relative;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.bar dd i{position:absolute;top:0;left:0;width:100%;height:100%;background:var(--text-primary);transform:scaleX(var(--v,1));transform-origin:left}
+.sel-panel.on .bar dd i{animation:barIn 1s var(--ease-out) .12s both}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(var(--v,1))}}
+.bar b{font-family:var(--f-mono);font-size:.8rem;font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.sel-panel .btn{align-self:flex-start}
+.sel-tabs{order:-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 34px}
+.sel-tab{position:relative;display:flex;align-items:center;gap:12px;min-height:64px;padding:8px 12px 8px 8px;background:var(--panel);border:1px solid var(--line-strong);border-radius:8px;color:var(--text-secondary);font:600 1rem/1.2 var(--f-body);text-align:left;cursor:pointer;transition:border-color .4s var(--ease-out),background-color .4s var(--ease-out),color .4s var(--ease-out),transform .35s var(--ease-out)}
+.sel-tab img{flex:none;width:48px;height:48px;border-radius:6px;object-fit:cover;object-position:50% 14%;filter:grayscale(.7);transition:filter .5s var(--ease-out)}
+.sel-tab:hover{transform:translateY(-2px);color:var(--text-primary)}
+.sel-tab.on{border-color:var(--accent-bright);background:var(--panel-2);color:var(--text-primary)}
+.sel-tab.on img,.sel-tab:hover img{filter:none}
+.sel-note{margin-top:14px}
+
 /* o clube: the plumb line draws itself down as you scroll */
 .clube-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(40px,7vw,110px);align-items:start}
 .clube-txt{display:flex;flex-direction:column;gap:22px;position:sticky;top:calc(var(--nav-h) + 48px)}
@@ -363,7 +403,8 @@ fieldset.field{border:0;margin:0;padding:0;min-width:0}
 
 /* responsive */
 @media (max-width:900px){
-  .clube-grid,.visita-grid{grid-template-columns:minmax(0,1fr)}
+  .clube-grid,.visita-grid,.sel{grid-template-columns:minmax(0,1fr)}
+  .sel-tabs{order:-1;margin:0 0 26px}
   .clube-txt{position:static}
   .steps{grid-template-columns:minmax(0,1fr);gap:44px}
   .hold{grid-template-columns:minmax(0,1fr)}
@@ -377,6 +418,9 @@ fieldset.field{border:0;margin:0;padding:0;min-width:0}
   .foot-meta{text-align:left}
 }
 @media (max-width:520px){
+  .sel-tab{flex-direction:column;align-items:stretch;gap:8px;padding:6px 6px 10px;text-align:center}
+  .sel-tab img{width:100%;height:88px}
+  .sel-panel .btn{align-self:stretch}
   .plumb{padding-left:52px}
   .pl-item::before{left:-32px;width:20px}
   .read{grid-template-columns:84px minmax(0,1fr) 20px;gap:10px}
@@ -421,6 +465,7 @@ fieldset.field{border:0;margin:0;padding:0;min-width:0}
       <b>Prumo</b>
     </a>
     <div class="nav-links">
+      <a class="link" href="#treinadores">Treinadores</a>
       <a class="link" href="#clube">O clube</a>
       <a class="link" href="#como">Como funciona</a>
       <a class="link" href="#plano">Plano</a>
@@ -479,6 +524,80 @@ fieldset.field{border:0;margin:0;padding:0;min-width:0}
     <h1>Força no <span class="em">prumo.</span></h1>
     <p class="hs-sub">Musculação com hora marcada, oito pessoas por hora e um treinador de olho em você.</p>
     <a class="btn" href="#visita">Agendar uma visita</a>
+  </div>
+</section>
+
+<section class="sec treinadores reveal" id="treinadores" aria-labelledby="h-treinadores">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kicker rv">Treinadores</p>
+      <h2 class="rv" id="h-treinadores">Escolha quem vai olhar o&nbsp;seu treino.</h2>
+    </div>
+    <!-- TREINADORES PROVISORIOS, gerados por IA. Para trocar por pessoas reais:
+         1. substitua assets/treinadores/t1.jpg, t2.jpg e t3.jpg (foto em pe, vertical, rosto no terco de cima);
+         2. o video e opcional: troque t1.mp4, t2.mp4, t3.mp4 ou apague o atributo data-src do <video> para ficar so a foto;
+         3. edite nome, especialidade, frase e numeros nos tres blocos sel-panel, nos tres botoes sel-tab e no formulario de visita. -->
+    <div class="sel rv rv-scale" id="sel">
+      <div class="sel-media">
+        <figure class="sel-fig on">
+          <img src="assets/treinadores/t1.jpg" width="900" height="1612" decoding="async" alt="Bia, treinadora da Prumo, na sala de treino">
+          <video data-src="assets/treinadores/t1.mp4" muted playsinline loop preload="none" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video>
+        </figure>
+        <figure class="sel-fig">
+          <img src="assets/treinadores/t2.jpg" width="900" height="1612" loading="lazy" decoding="async" alt="Caio, treinador da Prumo, na sala de treino">
+          <video data-src="assets/treinadores/t2.mp4" muted playsinline loop preload="none" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video>
+        </figure>
+        <figure class="sel-fig">
+          <img src="assets/treinadores/t3.jpg" width="900" height="1612" loading="lazy" decoding="async" alt="Marta, treinadora da Prumo, na sala de treino">
+          <video data-src="assets/treinadores/t3.mp4" muted playsinline loop preload="none" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1"></video>
+        </figure>
+        <i class="cn tl" aria-hidden="true"></i><i class="cn tr" aria-hidden="true"></i><i class="cn bl" aria-hidden="true"></i><i class="cn br" aria-hidden="true"></i>
+        <p class="sel-count" aria-hidden="true"><b>01</b> / 03</p>
+      </div>
+      <div class="sel-side">
+        <div class="sel-panels">
+          <div class="sel-panel on" id="tp-0" role="tabpanel" aria-labelledby="tt-0">
+            <p class="kicker">Postura e mobilidade</p>
+            <h3 class="sel-name">Bia</h3>
+            <p class="sel-quote">“Antes de pôr peso, eu arrumo o movimento.”</p>
+            <dl class="bars">
+              <div class="bar" style="--v:0.97"><dt>Postura</dt><dd><i></i></dd><b>97</b></div>
+              <div class="bar" style="--v:0.78"><dt>Carga</dt><dd><i></i></dd><b>78</b></div>
+              <div class="bar" style="--v:0.90"><dt>Paciência</dt><dd><i></i></dd><b>90</b></div>
+            </dl>
+            <a class="btn" href="#visita" data-treinador="Bia">Quero treinar com a Bia</a>
+          </div>
+          <div class="sel-panel" id="tp-1" role="tabpanel" aria-labelledby="tt-1">
+            <p class="kicker">Força e levantamento</p>
+            <h3 class="sel-name">Caio</h3>
+            <p class="sel-quote">“Carga certa é a que você levanta bonito.”</p>
+            <dl class="bars">
+              <div class="bar" style="--v:0.84"><dt>Postura</dt><dd><i></i></dd><b>84</b></div>
+              <div class="bar" style="--v:0.98"><dt>Carga</dt><dd><i></i></dd><b>98</b></div>
+              <div class="bar" style="--v:0.72"><dt>Paciência</dt><dd><i></i></dd><b>72</b></div>
+            </dl>
+            <a class="btn" href="#visita" data-treinador="Caio">Quero treinar com o Caio</a>
+          </div>
+          <div class="sel-panel" id="tp-2" role="tabpanel" aria-labelledby="tt-2">
+            <p class="kicker">Treino depois dos 50</p>
+            <h3 class="sel-name">Marta</h3>
+            <p class="sel-quote">“Nunca é tarde. Só tem que ser bem feito.”</p>
+            <dl class="bars">
+              <div class="bar" style="--v:0.92"><dt>Postura</dt><dd><i></i></dd><b>92</b></div>
+              <div class="bar" style="--v:0.74"><dt>Carga</dt><dd><i></i></dd><b>74</b></div>
+              <div class="bar" style="--v:0.99"><dt>Paciência</dt><dd><i></i></dd><b>99</b></div>
+            </dl>
+            <a class="btn" href="#visita" data-treinador="Marta">Quero treinar com a Marta</a>
+          </div>
+        </div>
+        <div class="sel-tabs" role="tablist" aria-label="Treinadores">
+          <button class="sel-tab on" type="button" role="tab" id="tt-0" aria-selected="true" aria-controls="tp-0" tabindex="0"><img src="assets/treinadores/t1.jpg" width="900" height="1612" loading="lazy" decoding="async" alt=""><span>Bia</span></button>
+          <button class="sel-tab" type="button" role="tab" id="tt-1" aria-selected="false" aria-controls="tp-1" tabindex="-1"><img src="assets/treinadores/t2.jpg" width="900" height="1612" loading="lazy" decoding="async" alt=""><span>Caio</span></button>
+          <button class="sel-tab" type="button" role="tab" id="tt-2" aria-selected="false" aria-controls="tp-2" tabindex="-1"><img src="assets/treinadores/t3.jpg" width="900" height="1612" loading="lazy" decoding="async" alt=""><span>Marta</span></button>
+        </div>
+        <p class="fine sel-note">Você confirma o treinador na visita.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -672,6 +791,15 @@ fieldset.field{border:0;margin:0;padding:0;min-width:0}
           <label><input type="radio" name="periodo" value="Manhã" checked><span>Manhã</span></label>
           <label><input type="radio" name="periodo" value="Tarde"><span>Tarde</span></label>
           <label><input type="radio" name="periodo" value="Noite"><span>Noite</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="field">
+        <legend>Treinador</legend>
+        <div class="radios">
+          <label><input type="radio" name="treinador" value="Tanto faz" checked><span>Tanto faz</span></label>
+          <label><input type="radio" name="treinador" value="Bia"><span>Bia</span></label>
+          <label><input type="radio" name="treinador" value="Caio"><span>Caio</span></label>
+          <label><input type="radio" name="treinador" value="Marta"><span>Marta</span></label>
         </div>
       </fieldset>
       <button class="btn" type="submit">Agendar minha visita</button>
@@ -1059,6 +1187,7 @@ $$('.sec').forEach(el => liveIO.observe(el));
 document.addEventListener('visibilitychange', () => {
   document.body.classList.toggle('paused', document.hidden);
   pendWake();
+  if (document.hidden) stopFig(selFigs[selIdx]); else playFig(selFigs[selIdx]);
 });
 
 /* chalk in the air of the fixed environment, seeded */
@@ -1148,14 +1277,65 @@ holdBtn.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter')
 holdBtn.addEventListener('click', e => { if (e.detail === 0 && !holdDone) completeHold(false); });
 new IntersectionObserver(es => { pendVisible = es[0].isIntersecting; pendWake(); }).observe(hold);
 
+/* ---------- trainer selection: one on stage, the short clip plays only for the chosen one ---------- */
+const sel = $('#sel');
+const selTabs = $$('.sel-tab', sel), selPanels = $$('.sel-panel', sel), selFigs = $$('.sel-fig', sel), selCount = $('.sel-count b', sel);
+let selIdx = 0, selOnScreen = false;
+function playFig(fig) {
+  const v = $('video', fig);
+  if (!v || !v.dataset.src || RM.matches || !selOnScreen || document.hidden) return;
+  if (!v.getAttribute('src')) {
+    v.addEventListener('playing', () => fig.classList.add('playing'));
+    v.addEventListener('error', () => fig.classList.remove('playing'));
+    v.src = v.dataset.src;
+  }
+  /* a browser that will not start it (in-app browser, low power mode) simply keeps the photo */
+  const p = v.play();
+  if (p && p.catch) p.catch(() => {});
+}
+function stopFig(fig, rewind) {
+  const v = $('video', fig);
+  if (!v || !v.getAttribute('src')) return;
+  if (!v.paused) v.pause();
+  /* rewound, the clip starts again on the same pose as the photo */
+  if (rewind) { try { v.currentTime = 0; } catch (e) {} }
+}
+function selectTrainer(i) {
+  selIdx = i;
+  selTabs.forEach((t, n) => { const on = n === i; t.classList.toggle('on', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; });
+  selPanels.forEach((p, n) => p.classList.toggle('on', n === i));
+  selFigs.forEach((fg, n) => { const on = n === i; fg.classList.toggle('on', on); if (!on) { stopFig(fg, true); fg.classList.remove('playing'); } });
+  selCount.textContent = '0' + (i + 1);
+  playFig(selFigs[i]);
+}
+selTabs.forEach((t, i) => {
+  t.addEventListener('click', () => selectTrainer(i));
+  t.addEventListener('keydown', e => {
+    const n = selTabs.length;
+    const to = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? (i + 1) % n : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? (i + n - 1) % n : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : -1;
+    if (to < 0) return;
+    e.preventDefault(); selectTrainer(to); selTabs[to].focus();
+  });
+});
+new IntersectionObserver(es => {
+  selOnScreen = es[0].isIntersecting;
+  if (selOnScreen) playFig(selFigs[selIdx]); else stopFig(selFigs[selIdx]);
+}, { threshold: 0.25 }).observe(sel);
+$$('[data-treinador]').forEach(a => a.addEventListener('click', () => {
+  const r = document.querySelector('#form input[name="treinador"][value="' + a.dataset.treinador + '"]');
+  if (r) r.checked = true;
+}));
+
 /* reduced motion, honored live in both directions */
 function pinToFinalStates() {
   if (!holdDone) completeHold(true);
   plumbPinned = true; writePlumb(1);
+  selFigs.forEach(fg => { stopFig(fg); fg.classList.remove('playing'); });
 }
 function unpinFinalStates() {
   if (holdPinned) resetHold();
   if (plumbPinned) { plumbPinned = false; drivePlumb(); }
+  playFig(selFigs[selIdx]);
 }
 onMQ(RM, e => {
   if (e.matches) pinToFinalStates();
